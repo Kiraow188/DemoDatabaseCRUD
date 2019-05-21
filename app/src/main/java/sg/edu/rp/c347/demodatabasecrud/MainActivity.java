@@ -1,5 +1,6 @@
 package sg.edu.rp.c347.demodatabasecrud;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
                 if (row_affected != -1){
                     Toast.makeText(MainActivity.this, "Insert successful",
                             Toast.LENGTH_SHORT).show();
+                    etContent.setText("");
                 }
             }
         });
@@ -61,5 +63,22 @@ public class MainActivity extends AppCompatActivity {
                 tvDBContent.setText(txt);
             }
         });
+
+        btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this,
+                        EditActivity.class);
+
+                String data = al.get(0);
+                String id = data.split(",")[0].split(":")[1];
+                String content = data.split(",")[1].trim();
+
+                Note target = new Note(Integer.parseInt(id), content);
+                i.putExtra("data", target);
+                startActivity(i);
+            }
+        });
+
     }
 }
